@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portfolio of Rahul Ghumare, Data Analytics Intern and MCA student.">
+  <title>Rahul Ghumare | Data Analytics Portfolio</title>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root{
+      --primary:#7652a8;--primary-dark:#513477;--accent:#f3c969;
+      --ink:#252333;--muted:#666579;
+      --bg:#f7f5fb;--section-alt:#ffffff;
+      --card:#ffffff;--card-border:#eee9f5;
+      --nav-bg:rgba(81,52,119,.97);
+      --tag-bg:#f0eafa;--tag-ink:#573b7b;
+      --shadow:0 8px 28px #33214a0c;
+    }
+    [data-theme="dark"]{
+      --primary:#a98be0;--primary-dark:#c9b6f2;--accent:#f3c969;
+      --ink:#ece8f6;--muted:#a9a3bd;
+      --bg:#14101c;--section-alt:#1b1626;
+      --card:#1f1a2c;--card-border:#2e2740;
+      --nav-bg:rgba(26,19,40,.97);
+      --tag-bg:#2b2340;--tag-ink:#cbb8f0;
+      --shadow:0 8px 28px #00000045;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;scroll-padding-top:80px}
+    body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;transition:background .35s,color .35s}
+    a{color:inherit}
+    .container{width:min(1100px,90%);margin:auto}
+
+    /* ---------- scroll progress ---------- */
+    #progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--primary),var(--accent));z-index:80;transition:width .1s linear}
+
+    /* ---------- nav ---------- */
+    nav{position:sticky;top:0;z-index:20;background:var(--nav-bg);color:#fff;box-shadow:0 4px 18px #20152b22;backdrop-filter:blur(6px)}
+    .nav-inner{min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{font-size:1.25rem;font-weight:800;letter-spacing:.2px;text-decoration:none}
+    .nav-links{display:flex;gap:22px;align-items:center}
+    .nav-links a{position:relative;text-decoration:none;font-weight:600;font-size:.95rem;padding:4px 0;transition:color .2s}
+    .nav-links a::after{content:"";position:absolute;left:0;bottom:-2px;height:2px;width:0;background:var(--accent);transition:width .25s}
+    .nav-links a:hover,.nav-links a.active{color:var(--accent)}
+    .nav-links a:hover::after,.nav-links a.active::after{width:100%}
+    .nav-actions{display:flex;align-items:center;gap:10px}
+    .icon-btn{width:38px;height:38px;border-radius:50%;border:1px solid #ffffff33;background:#ffffff1a;color:#fff;cursor:pointer;display:grid;place-items:center;font-size:.95rem;transition:.25s}
+    .icon-btn:hover{background:#ffffff33;transform:rotate(18deg)}
+    .menu-btn{display:none;background:none;border:0;color:white;font-size:1.5rem;cursor:pointer}
+
+    /* ---------- hero ---------- */
+    .hero{background:linear-gradient(135deg,#513477,#8867b5);color:white;text-align:center;padding:76px 0 90px}
+    .hero-profile{position:relative;width:176px;height:176px;margin:0 auto 26px}
+    .hero-profile::before{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,var(--accent),#ffffffaa,#b79ae6,var(--accent));animation:ringSpin 10s linear infinite}
+    .hero-profile .initials{position:absolute;inset:6px;border-radius:50%;display:grid;place-items:center;font-size:3rem;font-weight:800;letter-spacing:1px;color:#fff;background:linear-gradient(135deg,#6b4898,#9878c2);z-index:1;transition:opacity .35s ease}
+    .hero-profile.has-photo .initials{opacity:0}
+    .hero-profile img{position:absolute;inset:6px;width:calc(100% - 12px);height:calc(100% - 12px);border-radius:50%;object-fit:cover;z-index:2;opacity:0;transition:opacity .5s;box-shadow:0 10px 30px #20152b55;display:block}
+    .hero-profile img.loaded{opacity:1}
+    @keyframes ringSpin{to{transform:rotate(360deg)}}
+
+    .eyebrow{text-transform:uppercase;letter-spacing:3px;color:var(--accent);font-size:.8rem;font-weight:700}
+    h1{font-size:clamp(2.4rem,6vw,4.4rem);line-height:1.12;margin:14px 0}
+    .hero h2{font-size:clamp(1.05rem,3vw,1.5rem);font-weight:500;color:#eee5fa;min-height:1.7em}
+    .caret{display:inline-block;width:2px;height:1em;background:var(--accent);margin-left:4px;vertical-align:-2px;animation:blink 1s steps(1) infinite}
+    @keyframes blink{50%{opacity:0}}
+    .hero p{max-width:720px;margin:20px auto 0;color:#f1eafa}
+    .actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:30px}
+    .btn{display:inline-flex;gap:9px;align-items:center;padding:12px 22px;border-radius:999px;text-decoration:none;font-weight:700;transition:.2s}
+    .btn:hover{transform:translateY(-2px)}
+    .btn-primary{background:var(--accent);color:#342344}
+    .btn-outline{border:1px solid #fff;color:#fff}
+    .btn-outline:hover{background:#ffffff1f}
+
+    .hero-stats{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:36px}
+    .hero-stats div{background:#ffffff1a;border:1px solid #ffffff33;border-radius:14px;padding:12px 24px;text-align:center;min-width:110px}
+    .hero-stats strong{display:block;font-size:1.5rem;color:var(--accent);line-height:1.2}
+    .hero-stats span{font-size:.72rem;letter-spacing:1px;text-transform:uppercase;color:#e9e0f7}
+
+    /* ---------- sections ---------- */
+    section{padding:76px 0}
+    section:nth-of-type(even){background:var(--section-alt)}
+    .section-heading{text-align:center;margin-bottom:38px}
+    .section-heading .eyebrow{color:var(--primary)}
+    .section-heading h2{font-size:2rem;margin-top:5px}
+    .about{max-width:820px;text-align:center;margin:auto;color:var(--muted);font-size:1.08rem}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+    .card{background:var(--card);padding:24px;border-radius:16px;box-shadow:var(--shadow);border:1px solid var(--card-border);transition:transform .25s,box-shadow .25s,background .35s,border-color .35s}
+    .card:hover{transform:translateY(-4px);box-shadow:0 14px 34px #33214a1f}
+
+    /* skills */
+    .skill-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+    .skill-groups h3{color:var(--primary-dark);margin-bottom:12px}
+    .tags{display:flex;flex-wrap:wrap;gap:8px}
+    .tag{background:var(--tag-bg);color:var(--tag-ink);border-radius:30px;padding:6px 11px;font-size:.88rem;font-weight:600;transition:.2s}
+    .tag:hover{transform:translateY(-2px)}
+    .skill-bars{margin-top:18px}
+    .skill-bars h3{color:var(--primary-dark);margin-bottom:16px}
+    .bar-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px 26px}
+    .bar-head{display:flex;justify-content:space-between;font-size:.88rem;font-weight:700;color:var(--muted);margin-bottom:6px}
+    .track{height:8px;background:var(--tag-bg);border-radius:99px;overflow:hidden}
+    .track i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--primary),var(--accent));transition:width 1.1s cubic-bezier(.2,.7,.3,1)}
+    .skill-bars.visible .track i{width:var(--w)}
+
+    /* timeline / experience */
+    .timeline{max-width:820px;margin:auto;display:grid;gap:18px}
+    .timeline .card{border-left:4px solid var(--primary)}
+    .meta{color:var(--primary);font-weight:700;font-size:.9rem}
+    .card h3{font-size:1.2rem;margin:5px 0}
+    .card p,.card li{color:var(--muted)}
+    .card ul{padding-left:20px;margin-top:10px}
+
+    /* projects */
+    .filters{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:26px}
+    .filter-btn{background:var(--card);border:1px solid var(--card-border);color:var(--muted);padding:9px 18px;border-radius:999px;font-weight:700;font-size:.88rem;cursor:pointer;font-family:inherit;transition:.22s}
+    .filter-btn:hover{color:var(--primary);border-color:var(--primary)}
+    .filter-btn.active{background:var(--primary);border-color:var(--primary);color:#fff}
+    .project-card{padding:0;overflow:hidden}
+    .project-card.hide{display:none}
+    .project-top{padding:22px 24px;background:linear-gradient(135deg,#6b4898,#9878c2);color:white}
+    .project-top p{color:#f2eafa}
+    .project-content{padding:22px 24px}
+    .project-content ul{padding-left:20px;color:var(--muted);margin:10px 0 18px}
+
+    /* contact */
+    .contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;max-width:850px;margin:auto}
+    .contact-item{display:flex;gap:14px;align-items:center}
+    .contact-item i{font-size:1.3rem;color:var(--primary);width:25px;text-align:center;flex:none}
+    .contact-item small{display:block;color:var(--muted)}
+    .copy-btn{margin-left:auto;flex:none;background:var(--tag-bg);color:var(--tag-ink);border:0;border-radius:10px;padding:8px 11px;cursor:pointer;font-family:inherit;transition:.2s}
+    .copy-btn:hover{transform:translateY(-2px);background:var(--primary);color:#fff}
+
+    footer{background:#342344;color:#eee;text-align:center;padding:25px}
+    footer p{font-size:.9rem}
+
+    /* ---------- reveal ---------- */
+    .reveal{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s ease}
+    .reveal.visible{opacity:1;transform:none}
+
+    /* ---------- misc widgets ---------- */
+    .to-top{position:fixed;right:22px;bottom:22px;width:46px;height:46px;border-radius:50%;border:0;background:var(--primary);color:#fff;cursor:pointer;font-size:1rem;box-shadow:0 10px 24px #33214a44;opacity:0;pointer-events:none;transform:translateY(14px);transition:.3s;z-index:40}
+    .to-top.show{opacity:1;pointer-events:auto;transform:none}
+    .to-top:hover{background:var(--primary-dark)}
+    .toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);background:#342344;color:#fff;padding:11px 20px;border-radius:999px;font-size:.9rem;font-weight:600;opacity:0;pointer-events:none;transition:.3s;z-index:90}
+    .toast.show{opacity:1;transform:translate(-50%,0)}
+
+    @media(max-width:760px){
+      .menu-btn{display:block}
+      .nav-links{display:none;position:absolute;top:68px;left:0;right:0;background:var(--nav-bg);padding:16px 5%;flex-direction:column;align-items:flex-start;gap:14px;box-shadow:0 12px 24px #20152b33}
+      .nav-links.open{display:flex}
+      .hero{padding:60px 0 70px}
+      .hero-profile{width:148px;height:148px}
+      .hero-profile .initials{font-size:2.5rem}
+      section{padding:60px 0}
+    }
+    @media(prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+      .reveal{opacity:1;transform:none;transition:none}
+      .hero-profile::before,.caret{animation:none}
+      .track i{transition:none}
+    }
+  </style>
+</head>
+<body>
+  <div id="progress" aria-hidden="true"></div>
+
+  <nav>
+    <div class="container nav-inner">
+      <a class="brand" href="#home">Rahul Ghumare</a>
+      <div class="nav-links" id="navLinks">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#education">Education</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <button class="icon-btn" id="themeBtn" aria-label="Toggle dark mode"><i class="fa-solid fa-moon"></i></button>
+        <button class="menu-btn" id="menuBtn" aria-label="Open navigation" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" id="home">
+    <div class="container">
+      <div class="hero-profile reveal">
+        <span class="initials" aria-hidden="true">RG</span>
+        <img id="profilePhoto" src="photo.jpeg" alt="Portrait of Rahul Ghumare">
+      </div>
+      <div class="eyebrow reveal">Data Analytics • Machine Learning</div>
+      <h1 class="reveal">Rahul Ghumare</h1>
+      <h2 class="reveal"><span id="typed"></span><span class="caret" aria-hidden="true"></span></h2>
+      <p class="reveal">Interested in transforming data into useful insights through Python, SQL, Excel, and Power BI. Experienced in data cleaning, exploratory analysis, visualization, and reporting.</p>
+      <div class="actions reveal">
+        <a class="btn btn-primary" href="#contact"><i class="fa-solid fa-envelope"></i> Contact Me</a>
+        <a class="btn btn-outline" href="Rahul_Ghumare_Resume.pdf" download><i class="fa-solid fa-download"></i> Download Resume</a>
+      </div>
+      <div class="hero-stats reveal" id="heroStats">
+        <div><strong data-count="2" data-suffix="+">0</strong><span>Projects</span></div>
+        <div><strong data-count="4">0</strong><span>Certifications</span></div>
+        <div><strong data-count="1">0</strong><span>Internship</span></div>
+        <div><strong data-count="12" data-suffix="+">0</strong><span>Technologies</span></div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="about">
+      <div class="container">
+        <div class="section-heading reveal"><div class="eyebrow">Introduction</div><h2>About Me</h2></div>
+        <p class="about reveal">I am an MCA student and Data Analytics Intern at VMV Tech Solutions. I work with Python, Pandas, NumPy, SQL, Power BI, and Excel to clean and analyze datasets, explore patterns, and communicate findings through clear visualizations and reports. I value analytical thinking, teamwork, and continuous learning.</p>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="container">
+        <div class="section-heading reveal"><div class="eyebrow">What I work with</div><h2>Technical &amp; Professional Skills</h2></div>
+        <div class="skill-groups">
+          <div class="card reveal"><h3>Data &amp; Programming</h3><div class="tags"><span class="tag">Python</span><span class="tag">SQL</span><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">ETL</span><span class="tag">Data Analysis</span></div></div>
+          <div class="card reveal"><h3>Tools &amp; Platforms</h3><div class="tags"><span class="tag">Excel</span><span class="tag">Power BI</span><span class="tag">Databricks</span><span class="tag">Scikit-learn</span><span class="tag">Streamlit</span></div></div>
+          <div class="card reveal"><h3>Methods &amp; Work Skills</h3><div class="tags"><span class="tag">EDA</span><span class="tag">UAT</span><span class="tag">Agile</span><span class="tag">Scrum</span><span class="tag">Critical Thinking</span><span class="tag">Team Collaboration</span><span class="tag">Leadership</span><span class="tag">Time Management</span></div></div>
+        </div>
+
+        <div class="card skill-bars reveal">
+          <h3>Core Proficiency</h3>
+          <div class="bar-grid">
+            <div class="bar"><div class="bar-head"><span>Python</span><span>85%</span></div><div class="track"><i style="--w:85%"></i></div></div>
+            <div class="bar"><div class="bar-head"><span>SQL</span><span>80%</span></div><div class="track"><i style="--w:80%"></i></div></div>
+            <div class="bar"><div class="bar-head"><span>Power BI</span><span>78%</span></div><div class="track"><i style="--w:78%"></i></div></div>
+            <div class="bar"><div class="bar-head"><span>Excel</span><span>85%</span></div><div class="track"><i style="--w:85%"></i></div></div>
+            <div class="bar"><div class="bar-head"><span>Pandas &amp; NumPy</span><span>82%</span></div><div class="track"><i style="--w:82%"></i></div></div>
+            <div class="bar"><div class="bar-head"><span>Machine Learning</span><span>70%</span></div><div class="track"><i style="--w:70%"></i></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="container">
+        <div class="section-heading reveal"><div class="eyebrow">Professional journey</div><h2>Experience</h2></div>
+        <div class="timeline">
+          <article class="card reveal">
+            <div class="meta">June 2026 – Present</div>
+            <h3>Data Analytics Intern</h3>
+            <p><strong>VMV Tech Solutions</strong></p>
+            <ul>
+              <li>Analyzed and cleaned datasets using Python, Pandas, NumPy, and SQL to identify useful patterns and insights.</li>
+              <li>Created data visualizations and dashboards using Power BI and Excel to support data-driven decision-making.</li>
+              <li>Performed data preprocessing, exploratory data analysis, and basic statistical analysis to improve data quality and reporting.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container">
+        <div class="section-heading reveal"><div class="eyebrow">Selected work</div><h2>Projects</h2></div>
+
+        <div class="filters reveal">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="da">Data Analysis</button>
+          <button class="filter-btn" data-filter="ml">Machine Learning</button>
+        </div>
+
+        <div class="grid">
+          <article class="card project-card reveal" data-cat="da">
+            <div class="project-top"><h3>Netflix Statistics Analysis</h3><p>Data analysis &amp; visualization</p></div>
+            <div class="project-content">
+              <p>Analyzed Netflix data to explore behavioral trends, patterns, and user preferences.</p>
+              <ul><li>Visualized behavioral trends to support engagement and decision-making.</li><li>Identified patterns and user preferences in the data.</li><li>Presented actionable insights through clear reports.</li></ul>
+              <div class="tags"><span class="tag">Power BI</span><span class="tag">Excel</span></div>
+            </div>
+          </article>
+          <article class="card project-card reveal" data-cat="ml">
+            <div class="project-top"><h3>Course Recommendation System</h3><p>Machine learning application</p></div>
+            <div class="project-content">
+              <p>Developing two machine learning models to recommend courses for students after 12th standard and after graduation.</p>
+              <ul><li>Used encoding techniques to convert categorical data into numerical format.</li><li>Applied NumPy for data transformation and model input handling.</li><li>Training and testing machine learning models for course prediction.</li></ul>
+              <div class="tags"><span class="tag">Python</span><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">Scikit-learn</span><span class="tag">Streamlit</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="education">
+      <div class="container">
+        <div class="section-heading reveal"><div class="eyebrow">Academic background</div><h2>Education</h2></div>
+        <div class="timeline">
+          <article class="card reveal"><div class="meta">2025 – 2027</div><h3>Master of Computer Applications (MCA) — Appearing</h3><p>K. Gokhale Education Society's R. H. Sapat College of Engineering, Management Studies and Research</p></article>
+          <article class="card reveal"><div class="meta">2022 – 2025</div><h3>Bachelor of Computer Applications (BCA)</h3><p>K.R.T. Arts, B.H. Commerce and A.M. Science College</p><p><strong>CGPA:</strong> 5.75 (Final)</p></article>
+          <article class="card reveal"><div class="meta">2020 – 2022</div><h3>HSC</h3><p>H.A.K Highschool &amp; Jr. College, Manmad</p><p><strong>Percentage:</strong> 80.00%</p></article>
+          <article class="card reveal"><div class="meta">2019 – 2020</div><h3>SSC</h3><p>Chhatre New English School, Manmad, Maharashtra</p><p><strong>Percentage:</strong> 84.80%</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="certifications">
+      <div class="container">
+        <div class="section-heading reveal"><div class="eyebrow">Learning &amp; involvement</div><h2>Certifications &amp; Achievements</h2></div>
+        <div class="grid">
+          <div class="card reveal"><h3>Python</h3><p>Udemy</p></div>
+          <div class="card reveal"><h3>Data Science and Machine Learning Program</h3><p>Skillans</p></div>
+          <div class="card reveal"><h3>High Impact Presentation</h3><p>Infosys Springboard</p></div>
+          <div class="card reveal"><h3>Time Management</h3><p>Infosys Springboard</p></div>
+        </div>
+        <div class="timeline" style="margin-top:22px">
+          <article class="card reveal"><div class="meta">January 2024 – March 2024</div><h3>Festival Coordinator — KTHM College</h3><ul><li>Coordinated a team of 20+ members for the successful execution of the annual college festival.</li><li>Managed event planning, scheduling, budgeting, and vendor coordination.</li></ul></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="section-heading reveal"><div class="eyebrow">Get in touch</div><h2>Contact</h2></div>
+        <div class="contact-grid">
+          <div class="card contact-item reveal">
+            <i class="fa-solid fa-envelope"></i>
+            <div><small>Email</small><a href="mailto:ghumarers2752@gmail.com">ghumarers2752@gmail.com</a></div>
+            <button class="copy-btn" data-copy="ghumarers2752@gmail.com" aria-label="Copy email address"><i class="fa-regular fa-copy"></i></button>
+          </div>
+          <div class="card contact-item reveal">
+            <i class="fa-solid fa-phone"></i>
+            <div><small>Phone</small><a href="tel:+918888018411">+91 8888018411</a></div>
+            <button class="copy-btn" data-copy="+918888018411" aria-label="Copy phone number"><i class="fa-regular fa-copy"></i></button>
+          </div>
+          <div class="card contact-item reveal"><i class="fa-solid fa-location-dot"></i><div><small>Location</small><span>Nashik, India</span></div></div>
+          <div class="card contact-item reveal"><i class="fa-brands fa-linkedin"></i><div><small>LinkedIn</small><span>rahul-ghumare</span></div></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="container"><p>© <span id="year"></span> Rahul Ghumare. All rights reserved.</p></div></footer>
+
+  <button class="to-top" id="toTop" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    /* ---------- footer year ---------- */
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    /* ---------- profile photo (falls back to initials) ---------- */
+    const photo = document.getElementById('profilePhoto');
+    photo.addEventListener('load', () => {
+      photo.classList.add('loaded');
+      photo.parentElement.classList.add('has-photo');
+    });
+    photo.addEventListener('error', () => {
+      photo.remove();
+      photo.parentElement.classList.remove('has-photo');
+    });
+
+    /* ---------- mobile menu ---------- */
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('navLinks');
+    menuBtn.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', String(open));
+      menuBtn.innerHTML = open ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
+    });
+    navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+      menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+    }));
+
+    /* ---------- theme toggle ---------- */
+    const root = document.documentElement;
+    const themeBtn = document.getElementById('themeBtn');
+    function setTheme(theme) {
+      root.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+      themeBtn.innerHTML = theme === 'dark'
+        ? '<i class="fa-solid fa-sun"></i>'
+        : '<i class="fa-solid fa-moon"></i>';
+      themeBtn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+    }
+    const storedTheme = localStorage.getItem('theme');
+    setTheme(storedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+    themeBtn.addEventListener('click', () => setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
+
+    /* ---------- scroll progress + back to top ---------- */
+    const progress = document.getElementById('progress');
+    const toTop = document.getElementById('toTop');
+    let ticking = false;
+    function onScroll() {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      progress.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
+      toTop.classList.toggle('show', window.scrollY > 420);
+      ticking = false;
+    }
+    window.addEventListener('scroll', () => {
+      if (!ticking) { ticking = true; requestAnimationFrame(onScroll); }
+    }, { passive: true });
+    onScroll();
+    toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    /* ---------- reveal on scroll ---------- */
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealIO = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealIO.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => revealIO.observe(el));
+
+    /* ---------- animated counters ---------- */
+    function animateCount(el) {
+      const target = Number(el.dataset.count);
+      const suffix = el.dataset.suffix || '';
+      const duration = 1300;
+      const start = performance.now();
+      function step(now) {
+        const p = Math.min((now - start) / duration, 1);
+        const value = Math.floor(target * (1 - Math.pow(1 - p, 3)));
+        el.textContent = value + suffix;
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+    const statsBox = document.getElementById('heroStats');
+    const statsIO = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.querySelectorAll('[data-count]').forEach(animateCount);
+          statsIO.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    if (statsBox) statsIO.observe(statsBox);
+
+    /* ---------- typing headline ---------- */
+    const typedEl = document.getElementById('typed');
+    const roles = ['Data Analytics Intern', 'MCA Student', 'Python & SQL Enthusiast', 'Power BI Storyteller'];
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) {
+      typedEl.textContent = roles[0];
+    } else {
+      let roleIndex = 0, charIndex = 0, deleting = false;
+      (function tick() {
+        const word = roles[roleIndex];
+        typedEl.textContent = word.slice(0, charIndex);
+        if (!deleting) {
+          if (charIndex < word.length) { charIndex++; setTimeout(tick, 80); }
+          else { deleting = true; setTimeout(tick, 1600); }
+        } else {
+          if (charIndex > 0) { charIndex--; setTimeout(tick, 40); }
+          else { deleting = false; roleIndex = (roleIndex + 1) % roles.length; setTimeout(tick, 320); }
+        }
+      })();
+    }
+
+    /* ---------- active nav link ---------- */
+    const sections = [...document.querySelectorAll('header[id], main section[id]')];
+    const linkFor = new Map();
+    navLinks.querySelectorAll('a').forEach(a => linkFor.set(a.getAttribute('href').slice(1), a));
+    const navIO = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          linkFor.forEach(a => a.classList.remove('active'));
+          const active = linkFor.get(entry.target.id);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    sections.forEach(s => navIO.observe(s));
+
+    /* ---------- project filters ---------- */
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const projectCards = document.querySelectorAll('.project-card');
+    filterButtons.forEach(btn => btn.addEventListener('click', () => {
+      filterButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      projectCards.forEach(card => {
+        const show = filter === 'all' || card.dataset.cat === filter;
+        card.classList.toggle('hide', !show);
+      });
+    }));
+
+    /* ---------- copy to clipboard + toast ---------- */
+    const toast = document.getElementById('toast');
+    let toastTimer;
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const text = btn.dataset.copy;
+        try {
+          await navigator.clipboard.writeText(text);
+          showToast('Copied: ' + text);
+        } catch {
+          showToast('Copy failed — please select manually');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
